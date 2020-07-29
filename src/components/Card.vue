@@ -26,6 +26,7 @@ export default {
 
 <style>
 .display-card {
+    margin-top: 20px;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 20px 60px 0 rgba(41, 67, 100, 0.21);

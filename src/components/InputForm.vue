@@ -50,6 +50,7 @@ export default {
         },
         getInputData () {
             console.log("Validate Input");
+            this.$emit("send-form-data", this.validateFormData());
         },
         clearAllInput () {
             this.textValues = []
@@ -61,9 +62,9 @@ export default {
             for (let i=0; i < this.textValues.length; i++){
                 textInputsvalue += this.textValues[i] + " ";
             }
-            let numberInputsvalue = '';
+            let numberInputsvalue = 0;
             for (let i=0; i < this.numberValues.length; i++){
-                numberInputsvalue += this.numberValues[i];
+                numberInputsvalue += parseInt(this.numberValues[i]);
             }
 
             if (textInputsvalue.trim() === ""){
