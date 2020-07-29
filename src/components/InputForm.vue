@@ -1,17 +1,17 @@
-<!--Input example: [{text: 2}, {number: 3}, {image: 2}]-->
-
 <template>
     <div class="card" :id="'input-card-' + inputDetail.id">
         <span class="close" @click="$emit('close-form', inputDetail.id)">x</span>
 
         <div v-if="inputDetail.text">
-            <input v-for="(item, index) in inputDetail.text" :key="index" type="text" placeholder="Text"/>
+            <input v-for="(item, index) in inputDetail.text" :key="index" type="text" placeholder="Text" v-model="textValues[index]"/>
         </div>
         <div v-if="inputDetail.number">
-            <input v-for="(item, index) in inputDetail.number" :key="index" type="number" placeholder="Number"/>
+            <input v-for="(item, index) in inputDetail.number" :key="index" type="number" placeholder="Number" v-model="numberValues[index]"/>
         </div>
         <div v-if="inputDetail.file">
-            <input v-for="(item, index) in inputDetail.file" :key="index" type="file" placeholder="File"/>
+            <input v-for="(item, index) in inputDetail.file" :key="index" type="file" placeholder="File"
+                   @change="showImagePreview($event)"/>
+            <img :src="previewImage" alt="preview-img" class="preview-image">
         </div>
 
         <button class="clear-input-btn" @click="clearAllInput">Reset</button>
@@ -19,83 +19,127 @@
 </template>
 
 <script>
-    export default {
-        name: 'InputForm',
-        props: {
-            inputDetail: {
-                type: Object,
-                default: ()=> {
-                    return {
-                        id: 0, text: 2, number: 2, file: 2
-                    }
-                },
-                validator: function (value) {
-                    return ['id', 'text', 'number', 'file'].every(key => value[key] !== undefined)
+export default {
+    name: 'InputForm',
+    props: {
+        inputDetail: {
+            type: Object,
+            default () {
+                return {
+                    id: 0, text: 2, number: 2, file: 2
                 }
-            }
-        },
-        methods: {
-            showImagePreview: () => {
-                console.log("Preview Image");
             },
-            validateInput: () => {
-                console.log("Validate Input");
-            },
-            clearAllInput: () => {
-                console.log("All inputs cleared");
+            validator (value) {
+                return ['id', 'text', 'number', 'file'].every(key => value[key] !== undefined)
             }
         }
-        // mounted() {
-        //     console.log("Hello");
-        // }
+    },
+    methods: {
+        showImagePreview (event) {
+            if (event) {
+                let reader = new FileReader();
+                reader.readAsDataURL(event.target.files[0]);
+                reader.onload = () => {
+                    this.previewImage = reader.result;
+                    this.fileValues.push(reader.result);
+                };
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            }
+        },
+        getInputData () {
+            console.log("Validate Input");
+        },
+        clearAllInput () {
+            this.textValues = []
+            this.numberValues = []
+            console.log("All inputs cleared");
+        },
+        validateFormData () {
+            let textInputsvalue = '';
+            for (let i=0; i < this.textValues.length; i++){
+                textInputsvalue += this.textValues[i] + " ";
+            }
+            let numberInputsvalue = '';
+            for (let i=0; i < this.numberValues.length; i++){
+                numberInputsvalue += this.numberValues[i];
+            }
+
+            if (textInputsvalue.trim() === ""){
+                console.log("Validation error");
+            }
+            if (parseInt(numberInputsvalue) === 0){
+                console.log("Validation error");
+            }
+
+            return {name: textInputsvalue, age: numberInputsvalue, imgSource: this.fileValues[0]};
+        }
+    },
+    data() {
+        return {
+            previewImage: '',
+            textValues: [],
+            numberValues: [],
+            fileValues: []
+        }
     }
+    // mounted() {
+    //     console.log("Hello");
+    // }
+}
 </script>
 
 <style lang="scss" scoped>
-    .card {
+.card {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    max-width: 200px;
+    text-align: center;
+    position: relative;
+
+    input {
+        max-width: 90%;
         margin: 5px;
-        border: 1px solid #ccc;
-        float: left;
-        max-width: 200px;
-        text-align: center;
-        position: relative;
-
-        input {
-            max-width: 90%;
-            margin: 5px;
-        }
-
-        .close {
-            float: right;
-            display: inline-block;
-            padding: 2px 5px;
-            color: #fff;
-        }
-
-        .close:hover {
-            cursor: pointer;
-            float: right;
-            display: inline-block;
-            padding: 2px 5px;
-            background: #ccc;
-            color: #fff;
-        }
-
-        .clear-input-btn {
-            cursor: pointer;
-            float: right;
-            display: inline-block;
-            padding: 2px 5px;
-            background: transparent;
-            color: #0099CC;
-        }
     }
 
-    .card:hover {
-        border: 1px solid #777;
-
-        .close {
-            display: block;
-        }
+    .close {
+        float: right;
+        display: inline-block;
+        padding: 2px 5px;
+        color: #fff;
     }
+
+    .close:hover {
+        cursor: pointer;
+        float: right;
+        display: inline-block;
+        padding: 2px 5px;
+        background: #ccc;
+        color: #fff;
+    }
+
+    .clear-input-btn {
+        cursor: pointer;
+        float: right;
+        display: inline-block;
+        padding: 2px 5px;
+        background: transparent;
+        color: #0099CC;
+    }
+
+    .preview-image {
+        max-width: 180px;
+        max-height: 180px;
+    }
+}
+
+.card:hover {
+    border: 1px solid #777;
+
+    .close {
+        display: block;
+    }
+}
 </style>
