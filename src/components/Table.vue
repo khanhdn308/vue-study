@@ -27,19 +27,6 @@ export default {
 
     // columns: ["Name", "Age", "Avatar"]
   },
-  // data: () => {
-  //     return {
-  //         rows: [
-  //             {name: "Chandler Bing", age: 23, imgSource: 'https://placeholder.com/100'},
-  //             {name: "Ross Geller", age: 19, imgSource: 'https://placeholder.com/100'},
-  //             {name: "Rachel Green", age: 23, imgSource: 'https://placeholder.com/100'},
-  //             {name: "Monica Geller", age: 24, imgSource: 'https://placeholder.com/100'},
-  //             {name: "Joey Tribbiani", age: 26, imgSource: 'https://placeholder.com/100'},
-  //             {name: "Phoebe Buffay", age: 27, imgSource: 'https://placeholder.com/100'}
-  //         ],
-  //         columns: ["Name", "Age", "Avatar"]
-  //     }
-  // },
   methods: {
     sortTable: function sortTable(col) {
       this.rows.sort(function (a, b) {
@@ -67,7 +54,6 @@ export default {
 <style lang="scss">
 table {
   font-family: "Open Sans", sans-serif;
-  width: 750px;
   border-collapse: collapse;
   border: 3px solid #44475c;
   margin: 10px 10px 0 10px;

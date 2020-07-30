@@ -11,7 +11,8 @@
         <div v-if="inputDetail.file">
             <input v-for="(item, index) in inputDetail.file" :key="index" type="file" placeholder="File"
                    @change="showImagePreview($event)"/>
-            <img :src="previewImage" alt="preview-img" class="preview-image">
+            <img v-if="inputDetail.file === 1" :src="previewImage" alt="preview-img" class="preview-image" ref="preview-image">
+            <image-slider v-if="inputDetail.file > 1" :preview-images="fileValues"></image-slider>
         </div>
 
         <button class="clear-input-btn" @click="clearAllInput">Reset</button>
@@ -19,8 +20,13 @@
 </template>
 
 <script>
+import ImageSlider from "@/components/ImageSlider";
+
 export default {
     name: 'InputForm',
+    components: {
+      ImageSlider
+    },
     props: {
         inputDetail: {
             type: Object,
@@ -53,8 +59,10 @@ export default {
             this.$emit("send-form-data", this.validateFormData());
         },
         clearAllInput () {
-            this.textValues = []
-            this.numberValues = []
+            this.textValues = [];
+            this.numberValues = [];
+            this.fileValues = [];
+            this.previewImage = '';
             console.log("All inputs cleared");
         },
         validateFormData () {
@@ -93,9 +101,9 @@ export default {
 
 <style lang="scss" scoped>
 .card {
+    display: inline-block;
     margin: 5px;
     border: 1px solid #ccc;
-    float: left;
     max-width: 200px;
     text-align: center;
     position: relative;

@@ -56,8 +56,8 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: "Segoe UI", Tahoma;
-    background-color: #7ca971;
+    font-family: "Segoe UI", Tahoma, serif;
+    background-color: #44475c;
 }
 
 #app {
