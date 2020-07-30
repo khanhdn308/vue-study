@@ -75,10 +75,6 @@
         <div class="chart-section tab-panel" v-show="isActive('chart')">
             <chart :chartdata="chartData"/>
         </div>
-
-        <div id="slider">
-            <image-slider :preview-images="cards.map(obj => (obj.imgSource))"></image-slider>
-        </div>
     </div>
 </template>
 
@@ -88,12 +84,10 @@ import DataTable from "@/components/Table";
 import Carousel from "@/components/Carousel";
 import Card from "@/components/Card";
 import Chart from "@/components/Chart";
-import ImageSlider from "@/components/ImageSlider";
 // import TopBar from "@/components/TopBar";
 
 export default {
     components: {
-        ImageSlider,
         // TopBar,
         Chart,
         Carousel,
@@ -111,15 +105,15 @@ export default {
             totalInputForm: 0,
             formItems: [],
             items: [],
-            chartData: {
-                labels: ['Khanh', 'Phuc', 'VA'],
-                datasets: [
-                    {
-                        label: 'CMC Employees',
-                        data: [23, 22, 23]
-                    }
-                ]
-            },
+            // chartData: {
+            //     labels: ['Khanh', 'Phuc', 'VA'],
+            //     datasets: [
+            //         {
+            //             label: 'CMC Employees',
+            //             data: [23, 22, 23]
+            //         }
+            //     ]
+            // },
             cards: [
                 {
                     name: "Khanh",
@@ -141,6 +135,26 @@ export default {
                 },
             ],
         };
+    },
+    computed: {
+      chartData() {
+          let employeeData = {
+                          labels: [],
+                          datasets: [
+                              {
+                                  label: 'CMC Employees',
+                                  data: []
+                              }
+                          ]
+                      }
+          this.cards.forEach(function (card){
+              console.log(card);
+              employeeData.labels.push(card.name);
+              employeeData.datasets[0].data.push(card.age);
+          })
+          console.log(employeeData);
+          return employeeData;
+      }
     },
     methods: {
         setActive(menuItem) {
@@ -190,6 +204,7 @@ export default {
 <style lang="scss">
 .content {
     overflow-y: scroll;
+    align-items:center;
 }
 
 .form-container {
@@ -306,8 +321,8 @@ export default {
             background-color: #ddd;
         }
 
-        .active {
-
+        &.active {
+            background-color: #904B4B;
         }
     }
 }
