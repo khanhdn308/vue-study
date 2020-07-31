@@ -1,13 +1,13 @@
 <template>
     <div id="app">
+        <Navigation v-if="!mobileView"/>
         <NavigationMobile/>
-        <div class="content" :class="{'open':showNav}">
+        <div class="app-content" :class="{'open':showNav}">
             <div class="top-bar">
                 <div id="navigation-icon" v-if="mobileView"
                      @click="showNav = !showNav">
                     <i class="fas fa-bars"></i>
                 </div>
-                <Navigation v-if="!mobileView"/>
             </div>
             <Content/>
 
@@ -84,7 +84,7 @@ body {
     }
 }
 
-.content {
+.app-content {
     position: absolute;
     top: 10px;
     width: calc(100% - 60px);
@@ -94,6 +94,8 @@ body {
     border-radius: 30px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     transition: 1s transform cubic-bezier(0, .12, .14, 1);
+    overflow-y: scroll;
+    align-items:center;
 }
 
 .open {

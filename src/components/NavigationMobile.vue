@@ -6,16 +6,15 @@
     </div>
     <ul>
       <li>Home</li>
-      <li>Articles</li>
-      <li>Magazines</li>
-      <li>Editors</li>
-      <li>Readers</li>
+      <li>About</li>
+      <li>Contact</li>
+      <li>Careers</li>
     </ul>
-    <div class="social-media">
-      <i class="fab fa-twitter"></i>
-      <i class="fab fa-instagram"></i>
-      <i class="fab fa-pinterest"></i>
-    </div>
+<!--    <div class="social-media">-->
+<!--      <i class="fab fa-twitter"></i>-->
+<!--      <i class="fab fa-instagram"></i>-->
+<!--      <i class="fab fa-pinterest"></i>-->
+<!--    </div>-->
   </div>
 </template>
 

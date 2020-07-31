@@ -73,7 +73,7 @@
         </div>
         <!--Chart-->
         <div class="chart-section tab-panel" v-show="isActive('chart')">
-            <chart :chartdata="chartData"/>
+            <chart :chartdata="chartData" ref="employeeChart"/>
         </div>
     </div>
 </template>
@@ -105,15 +105,15 @@ export default {
             totalInputForm: 0,
             formItems: [],
             items: [],
-            // chartData: {
-            //     labels: ['Khanh', 'Phuc', 'VA'],
-            //     datasets: [
-            //         {
-            //             label: 'CMC Employees',
-            //             data: [23, 22, 23]
-            //         }
-            //     ]
-            // },
+            chartData: {
+                labels: ['Khanh', 'Phuc', 'VA'],
+                datasets: [
+                    {
+                        label: 'CMC Employees Age',
+                        data: [23, 22, 23]
+                    }
+                ]
+            },
             cards: [
                 {
                     name: "Khanh",
@@ -136,24 +136,23 @@ export default {
             ],
         };
     },
-    computed: {
-      chartData() {
+    watch: {
+      cards() {
           let employeeData = {
                           labels: [],
                           datasets: [
                               {
-                                  label: 'CMC Employees',
+                                  label: 'CMC Employees Age',
                                   data: []
                               }
                           ]
                       }
           this.cards.forEach(function (card){
-              console.log(card);
               employeeData.labels.push(card.name);
               employeeData.datasets[0].data.push(card.age);
           })
-          console.log(employeeData);
-          return employeeData;
+          this.chartData = employeeData;
+          this.updateChartData(this.chartData);
       }
     },
     methods: {
@@ -197,15 +196,14 @@ export default {
                 this.$refs.formItems[i].getInputData();
             }
         },
+        updateChartData(data) {
+            this.$refs.employeeChart.updateChartDisplay(data);
+        }
     },
 };
 </script>
 
 <style lang="scss">
-.content {
-    overflow-y: scroll;
-    align-items:center;
-}
 
 .form-container {
     display: flex;
@@ -285,8 +283,6 @@ export default {
         top: 0;
         max-width: 200px;
         margin: 10px;
-        //height: 100px;
-        //display: block;
     }
 
     button {

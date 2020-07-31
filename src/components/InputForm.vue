@@ -10,7 +10,7 @@
         </div>
         <div v-if="inputDetail.file">
             <input v-for="(item, index) in inputDetail.file" :key="index" type="file" placeholder="File"
-                   @change="showImagePreview($event)"/>
+                   @change="showImagePreview($event)" :ref="'input-file-' + index"/>
             <img v-if="inputDetail.file === 1" :src="previewImage" alt="preview-img" class="preview-image" ref="preview-image">
             <image-slider v-if="inputDetail.file > 1" :preview-images="fileValues"></image-slider>
         </div>
@@ -63,6 +63,11 @@ export default {
             this.numberValues = [];
             this.fileValues = [];
             this.previewImage = '';
+            if (this.inputDetail.file > 0){
+                for (let i=0; i < this.inputDetail.file; i++){
+                    this.$refs[`input-file-${0}`][0].value = "";
+                }
+            }
             console.log("All inputs cleared");
         },
         validateFormData () {
@@ -75,10 +80,10 @@ export default {
                 numberInputsvalue += parseInt(this.numberValues[i]);
             }
 
-            if (textInputsvalue.trim() === ""){
+            if (this.inputDetail.text > 0 && textInputsvalue.trim() === ""){
                 console.log("Validation error");
             }
-            if (parseInt(numberInputsvalue) === 0){
+            if (this.inputDetail.number > 0 && parseInt(numberInputsvalue) === 0){
                 console.log("Validation error");
             }
 
