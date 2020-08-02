@@ -1,10 +1,7 @@
 <template>
     <div id="content">
         <div class="form-container">
-            <div class="infobox">
-                <div class="title">Submit All</div>
-                <button @click="submitAllForm">Submit All Form</button>
-            </div>
+                <button class="submit-button" @click="submitAllForm">Submit All Form</button>
             <div class="form-box">
                 <div class="title">Add new form</div>
                 <div>
@@ -19,12 +16,9 @@
                     <label for="file-input-amount">Number of file input</label>
                     <input id="file-input-amount" type="number" v-model="fileInputNumber"/>
                 </div>
-                <button @click="addForm">Add Form</button>
+                <button class="add-button" @click="addForm">Add Form</button>
             </div>
-            <div class="infobox">
-                <div class="title">Remove all forms</div>
-                <button @click="removeAllForm">Remove All Forms</button>
-            </div>
+                <button class="remove-button" @click="removeAllForm">Remove All Forms</button>
         </div>
 
         <!--Form-->
@@ -209,6 +203,46 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    button {
+        margin: auto;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .add-button {
+        background-color: #30a326;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    .remove-button {
+        background-color: #a32626;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    .submit-button {
+        background-color: #2671a3;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
 }
 
 .teaser {
@@ -283,10 +317,6 @@ export default {
         top: 0;
         max-width: 200px;
         margin: 10px;
-    }
-
-    button {
-        margin: auto;
     }
 
 }
